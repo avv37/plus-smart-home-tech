@@ -35,6 +35,7 @@ public class KafkaConfig {
 
         @Getter
         @Setter
+        //вложенный класс
         public static class Properties {
             private Integer fetchMinBytes;
             private Integer maxPollRecords;

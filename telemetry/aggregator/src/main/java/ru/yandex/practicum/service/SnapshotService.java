@@ -28,7 +28,6 @@ public class SnapshotService {
         if (oldState != null &&
                 (oldState.getTimestamp().isAfter(event.getTimestamp()) ||
                         oldState.getData().equals(event.getPayload()))) {
-            log.info("updateState return empty");
             return Optional.empty();
         }
 
