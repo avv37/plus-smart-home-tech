@@ -17,17 +17,14 @@ public class SnapshotService {
 
     public Optional<SensorsSnapshotAvro> updateState(SensorEventAvro event) {
         log.info("updateState, event = {}", event);
-        log.info("updateState, sensorsSnapshots = {}", sensorsSnapshots);
         SensorsSnapshotAvro snapshot = sensorsSnapshots.computeIfAbsent(event.getHubId(), hubId ->
                 SensorsSnapshotAvro.newBuilder()
-                    .setHubId(hubId)
-                    .setSensorsState(new HashMap<>())
-                    .setTimestamp(event.getTimestamp())
-                    .build()
-                );
-        log.info("updateState, snapshot = {}", snapshot);
+                        .setHubId(hubId)
+                        .setSensorsState(new HashMap<>())
+                        .setTimestamp(event.getTimestamp())
+                        .build()
+        );
         SensorStateAvro oldState = snapshot.getSensorsState().get(event.getId());
-        log.info("updateState, oldState = {}", oldState);
         if (oldState != null &&
                 (oldState.getTimestamp().isAfter(event.getTimestamp()) ||
                         oldState.getData().equals(event.getPayload()))) {
@@ -39,7 +36,6 @@ public class SnapshotService {
                 .setTimestamp(event.getTimestamp())
                 .setData(event.getPayload())
                 .build();
-        log.info("updateState, newState = {}", newState);
         snapshot.getSensorsState().put(event.getId(), newState);
         snapshot.setTimestamp(event.getTimestamp());
         log.info("updateState, return snapshot = {}", snapshot);

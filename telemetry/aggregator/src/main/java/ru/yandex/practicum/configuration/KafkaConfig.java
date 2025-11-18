@@ -5,8 +5,6 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.Properties;
-
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "kafka.aggregator")
@@ -18,6 +16,7 @@ public class KafkaConfig {
 
     private Producer producer = new Producer();
     private Consumer consumer = new Consumer();
+
     @Getter
     @Setter
     public static class Producer {

@@ -51,10 +51,8 @@ public class AggregationStarter {
                 if (records.isEmpty()) {
                     continue;
                 }
-                log.info("records.count: {}", records.count());
                 int count = 0;
                 for (ConsumerRecord<String, SensorEventAvro> record : records) {
-                    log.info("count: {}, record: {}", count, record);
                     handleRecord(record, producer);
                     manageOffsets(record, count, consumer);
                     count++;
@@ -83,7 +81,6 @@ public class AggregationStarter {
                 new TopicPartition(record.topic(), record.partition()),
                 new OffsetAndMetadata(record.offset() + 1)
         );
-        log.info("manageOffsets count = {}", count);
         if (count % 10 == 0) {
             consumer.commitAsync(currentOffsets, (offsets, exception) -> {
                 if (exception != null) {
@@ -109,9 +106,9 @@ public class AggregationStarter {
             );
             producer.send(producerRecord, (metadata, exception) -> {
                 if (exception != null) {
-                    log.error("Ошибка при отправке снэпшота в топик {}: {}", snapshotTopic, exception.getMessage(), exception);
+                    log.error("Ошибка при отправке снапшота в топик {}: {}", snapshotTopic, exception.getMessage(), exception);
                 } else {
-                    log.info("Снэпшот успешно отправлен в топик {} на партицию {} со смещением {}",
+                    log.info("Снапшот успешно отправлен в топик {} на партицию {} со смещением {}",
                             metadata.topic(), metadata.partition(), metadata.offset());
                 }
             });
