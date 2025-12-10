@@ -124,6 +124,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         existingItemOpt.get().setQuantity(newQuantity);
+
+        warehouseClient.checkAvailabilityForCart(cartMapper.toDto(cart));
+
         cart = cartRepository.save(cart);
         return cartMapper.toDto(cart);
     }

@@ -54,10 +54,7 @@ public class ShoppingStoreServiceImpl implements ShoppingStoreService {
         Product product = productRepository.getReferenceById(productId);
         product.setProductState(ProductState.DEACTIVATE);
         Product newProduct = productRepository.save(product);
-        if (newProduct.getProductState().equals(ProductState.DEACTIVATE)) {
-            return true;
-        }
-        return false;
+        return newProduct.getProductState().equals(ProductState.DEACTIVATE);
     }
 
     @Override
@@ -68,10 +65,7 @@ public class ShoppingStoreServiceImpl implements ShoppingStoreService {
         Product product = productRepository.getReferenceById(productId);
         product.setQuantityState(request.getQuantityState());
         Product newProduct = productRepository.save(product);
-        if (newProduct.getQuantityState().equals(request.getQuantityState())) {
-            return true;
-        }
-        return false;
+        return newProduct.getQuantityState().equals(request.getQuantityState());
     }
 
     @Override
@@ -84,9 +78,8 @@ public class ShoppingStoreServiceImpl implements ShoppingStoreService {
     @Override
     @Transactional(readOnly = true)
     public Page<ProductDto> getProductsByCategory(ProductCategory productCategory, Pageable pageable) {
-        Page<ProductDto> productPage = productRepository.findAllByProductCategory(productCategory, pageable)
+        return productRepository.findAllByProductCategory(productCategory, pageable)
                 .map(productMapper::toDto);
-        return productPage;
     }
 
     private void checkIdIsNewOrThrow(UUID productId) {

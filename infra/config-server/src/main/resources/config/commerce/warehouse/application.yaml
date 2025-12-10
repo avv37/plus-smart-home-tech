@@ -17,7 +17,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_schema: shopping_store
+        default_schema: warehouse
   sql:
     init:
       mode: always
