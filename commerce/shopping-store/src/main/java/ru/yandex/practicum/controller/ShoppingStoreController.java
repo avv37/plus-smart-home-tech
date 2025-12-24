@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.client.ShoppingStoreClient;
+import ru.yandex.practicum.contract.ShoppingStoreContract;
 import ru.yandex.practicum.dto.ProductDto;
 import ru.yandex.practicum.dto.SetProductQuantityStateRequest;
 import ru.yandex.practicum.enums.ProductCategory;
@@ -28,7 +28,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-public class ShoppingStoreController implements ShoppingStoreClient {
+public class ShoppingStoreController implements ShoppingStoreContract {
 
     private final ShoppingStoreService storeService;
 

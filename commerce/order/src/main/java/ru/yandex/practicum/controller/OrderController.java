@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.client.OrderClient;
+import ru.yandex.practicum.contract.OrderContract;
 import ru.yandex.practicum.dto.CreateNewOrderRequest;
 import ru.yandex.practicum.dto.OrderDto;
 import ru.yandex.practicum.dto.ProductReturnRequest;
@@ -27,7 +27,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-public class OrderController implements OrderClient {
+public class OrderController implements OrderContract {
     private final OrderService orderService;
 
     @Override
@@ -135,8 +135,8 @@ public class OrderController implements OrderClient {
                                           Pageable pageable) {
         log.info("Найти заказы пользователя {}", username);
         Page<OrderDto> orders = orderService.getOrdersByUser(username, pageable);
-        log.info("Заказы пользователя {}", username);
-        return null;
+        log.info("Заказы пользователя {}: {}", username, orders);
+        return orders;
     }
 
 }
